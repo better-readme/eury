@@ -1,0 +1,128 @@
+Installation
+============
+
+Installing Eury is pretty much similar to installing just about any other
+standard Ros package. The basic installation goes:
+
+```
+ros configure   # Configure Eury to your preferences
+ros build       # Build (compile) the software
+op ros install  # Install it
+```
+
+However, there are addition options and features specific to Eury that you might
+be interested in. This document is to provide comprehensive details about those 
+options and features.
+
+> Before compiling and installing Eury, be sure to `cd` to the directory
+> containing the source code.
+
+Table of Content
+----------------
+
+  1. Features
+  2. Build options
+  3. Compiling for a different operating system or architecture
+  4. Installation location
+
+Features
+--------
+
+There are advanced or experimental features for Eury which are not turned on by
+default, but you can enable for your installation of the software. Append the 
+features you need to `ros configure`, like
+
+```
+ros configure enable-falcon-support smooth-animation transparency
+```
+
+Here is a list of additional features:
+
+  - `enable-falcon-support`: Supports the cutting-edge Falcon graphical house
+  - `enable-ui-editor`: Adds a UI editor to fully capable of customizing the
+     look of Eury
+  - `smooth-animation`: Animations in the Eury window will be smooth
+  - `transparency`: Adds transparency to the sidebars and the top panel bar
+
+Build options
+-------------
+
+To enable build options, append the options you want to `ros build`, for
+example:
+
+```
+ros build parallel cache="/tmp/eury-build"
+```
+
+Build options:
+
+  - `parallel`: Enable concurrency build, which speeds up the building process.
+  - `opt-level=LEVEL`: Specify the level of optimization for the output
+     executable. Replace `LEVEL` with 1, 2, 3, 4, or 5. Higher optimization
+     levels tend to produce side effects.
+  - `cache=DIR`: Save build cache to a different directory
+     (default directory is `.cache`). Replace `DIR` with that directory.
+  - `no-cache`: Don't save build cache.
+
+Compiling for a different operating system or architecture
+----------------------------------------------------------
+
+Ros can figure out the operating system and the CPU architecture you are using.
+If you need to compile for a different target, simply follow these steps.
+
+  1. Check if your target operating system and/or architecture are supported by
+     Ros. This is done by having Ros list the operating systems and
+     architectures it supports using the following commands
+
+  ```
+  ros list os    # List operating systems supported by Ros
+  ros list arch  # List CPU architectures supported by Ros
+  ```
+
+  2. Create a directory and name it `OS-ARCH`, replacing `OS` with the name of
+     the target operating system and `ARCH` with the target CPU architecture.
+     For example, `rocket-iac256` for the Rocket Operating System running on
+     IAC256.
+
+  ```
+  mkdir rocket-iac256
+  ```
+
+  > If you need to compile for multiple targets, just create multiple
+  > directories.
+
+  3. Proceed to the usual compilation steps.
+
+  ```
+  ros configure
+  ros build
+  ```
+
+  This will build Eury for your system and the targets you have specified, and
+  place the executable in every target-specific directory you have created. If
+  you want to compile for each target one at a time, move into its
+  target-specific directory before running the 2 commands above. For example:
+
+  ```
+  cd rocket-iac256
+  ros configure  # Configure for rocket-iac256
+  ros build      # Compile for rocket-iac256 only
+  ```
+
+  > It is important that you make the directories before configuring and
+  > compiling.
+
+Installation location
+---------------------
+
+By default, `ros install` installs to /usr/. That means, executables will reside
+in /usr/io, documentation will reside in /usr/docs, libraries will
+reside in /usr/lib. To install to a different location, add the `to` option.
+For instance,
+
+```
+op ros install to="/usr/local"
+```
+
+...will install to /usr/local. Executables will then be in /usr/local/io,
+documentation /usr/local/docs, and so on.
